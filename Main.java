@@ -1,5 +1,4 @@
 import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
         int earning = 0;
@@ -15,7 +14,6 @@ public class Main {
             if ("end".equals(input)) {
                 break;
             }
-
             int operationNumber = Integer.parseInt(input);
             switch (operationNumber) {
                 case (1):
@@ -31,30 +29,29 @@ public class Main {
                     spending += moneyTemp;
                     break;
                 case (3):
-                    int taxSavings = TaxEarningsMinusSpendings.taxEarningsMinusSpendings(earning, spending) - TaxEarnings.taxEnding(earning);
-                    if (TaxEarningsMinusSpendings.taxEarningsMinusSpendings(earning, spending) > TaxEarnings.taxEnding(earning)) {
+                    int tax1 = TaxEarningsMinusSpendings.taxEarningsMinusSpendings(earning, spending);// сохраним в tax1 расчет УСН 15%
+                    int tax2 = TaxEarnings.taxEnding(earning); //сохраним в tax2 расчет УСН 6%
+                    int taxSavings = Math.abs(tax1 - tax2);
+                    if (tax1 > tax2) {
                         System.out.println("Мы советуем Вам УСН доходы");
-                        System.out.println("Ваш налог составит: " + TaxEarnings.taxEnding(earning) + " рублей");
-                        System.out.println("Налог на другой системе: " + TaxEarningsMinusSpendings.taxEarningsMinusSpendings(earning, spending) + " рублей");
-                        System.out.println("Экономия: " + Math.abs(taxSavings) + " рублей");
+                        System.out.println("Ваш налог составит: " + tax2 + " рублей");
+                        System.out.println("Налог на другой системе: " + tax1 + " рублей");
+                        System.out.println("Экономия: " + taxSavings + " рублей");
 
-                    } else if (TaxEarningsMinusSpendings.taxEarningsMinusSpendings(earning, spending) < TaxEarnings.taxEnding(earning)) {
+                    } else if (tax1 < tax2) {
                         System.out.println("Мы советуем Вам УСН доходы минус расходы");
-                        System.out.println("Ваш налог составит: " + TaxEarningsMinusSpendings.taxEarningsMinusSpendings(earning, spending) + " рублей");
-                        System.out.println("Налог на другой системе: " + TaxEarnings.taxEnding(earning) + " рублей");
-                        System.out.println("Экономия: " + Math.abs(taxSavings) + " рублей");
+                        System.out.println("Ваш налог составит: " + tax1 + " рублей");
+                        System.out.println("Налог на другой системе: " + tax2 + " рублей");
+                        System.out.println("Экономия: " + taxSavings + " рублей");
                     } else {
                         System.out.println("Можете выбрать любую систему налогооблажения");
                     }
-                    //System.out.println("Программа завершена!");
                     break;
                 default:
                     System.out.println("Такой операции нет!");
                     break;
             }
-
         }
-
         System.out.println("Программа завершена!");
     }
 
